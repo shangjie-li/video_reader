@@ -52,16 +52,24 @@ void Videoreader::read()
     int time_interval;
     time_interval = int(1000 / video_fps_);
     
+    bool start_reader = false;
+    
     for(;;)
     {
         cap >> frame;
-        if (frame.empty()) break;
+        if (frame.empty())
+        {
+            if (!start_reader) ROS_ERROR("Not found %s", video_path_.c_str());
+            break;
+        }
+        start_reader = true;
         cv::imshow("reader", frame);
         msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", frame).toImageMsg();
         pub_image_.publish(msg);
         if (cv::waitKey(time_interval) == 27) break;
     }
     cv::destroyWindow("reader");
+    ros::shutdown();
 }
 
 int main(int argc, char** argv)
