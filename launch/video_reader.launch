@@ -1,0 +1,10 @@
+<!-- -->
+
+<launch>
+	<node pkg="video_reader" type="video_reader_node" name="video_reader_node" output="screen" >
+		<param name="pub_topic" value="/image_raw"/>
+		<param name="video_path" value="/home/lishangjie/ros_workspace/camera_ws/src/video_reader/src/0001_023.mp4"/>
+		<param name="video_fps" value="30"/>
+	</node>
+</launch>
+
